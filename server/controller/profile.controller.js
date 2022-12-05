@@ -8,6 +8,17 @@ class profileController {
     }
     res.status(200).send(data);
   }
+
+  static async editUser(req, res) {
+    const { data, error } = await ProfileService.editUser(
+      req.params.id,
+      req.body
+    );
+    if (error) {
+      return res.status(404).send(error._message);
+    }
+    res.status(200).send(data);
+  }
 }
 
 module.exports = profileController;

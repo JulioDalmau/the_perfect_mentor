@@ -14,9 +14,24 @@ class ProfileService {
     }
   }
 
-  static async editUser(id, { age, password, email }) {
+  static async editUser(
+    id,
+    { email, password, age, role, country, profession, language, skills }
+  ) {
     try {
-      const user = await User.findByIdAndUpdate({})
+      const user = await User.findByIdAndUpdate(id, {
+        $set: {
+          email: email,
+          password: password,
+          age: age,
+          role: role,
+          country: country,
+          profession: profession,
+          language: language,
+          skills: skills,
+        },
+      });
+      return user;
     } catch (error) {
       console.log(error);
       return { data: error };
