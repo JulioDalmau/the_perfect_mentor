@@ -8,31 +8,34 @@ import { HiOutlineDocumentReport } from "react-icons/hi";
 import { BiBarChart } from "react-icons/bi";
 import { BiUser } from "react-icons/bi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 export const Navbar = () => {
+  const user = useSelector((state) => state.user);
+  console.log(user.user._id)
   const navigate = useNavigate();
   const [cookie, setCookie, removeCookie] = useCookies([]);
 
-  React.useEffect(() => {
-    const verify = async () => {
-      if (!cookie.token) {
-        navigate("/login");
-      } else {
-        const { data } = await axios.post(
-          "http://localhost/3001/",
-          {},
-          { withCredentials: true }
-        );
-        // return data
-        if (!data.status) {
-          removeCookie("token");
-          navigate("/login");
-        }
-        return data;
-      }
-    };
-    verify();
-  }, [cookie, navigate, removeCookie]);
+  // React.useEffect(() => {
+  //   const verify = async () => {
+  //     if (!cookie.token) {
+  //       navigate("/login");
+  //     } else {
+  //       const { data } = await axios.post(
+  //         "http://localhost/3001/",
+  //         {},
+  //         { withCredentials: true }
+  //       );
+  //       // return data
+  //       if (!data.status) {
+  //         removeCookie("token");
+  //         navigate("/login");
+  //       }
+  //       return data;
+  //     }
+  //   };
+  //   verify();
+  // }, [cookie, navigate, removeCookie]);
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -141,23 +144,25 @@ export const Navbar = () => {
             </Link>
           </div>
           <div className="md:flex lg:flex xl:flex">
+            <Link to={`/profile/${user.user._id}`}>
             <button
               className="absolute text-[#bfd732] 
-          md:text-gray-700 md:pr-44 md:left-[5%] md:w-64 md:pl-3 md:hover:bg-gray-700 md:hover:text-[#bfd732] md:pt-5 md:pb-5 md:top-48 md:mt-5
-          lg:text-gray-700 lg:pr-44 lg:left-[5%] lg:w-64 lg:pl-3 lg:hover:bg-gray-700 lg:hover:text-[#bfd732] lg:pt-5 lg:pb-5 lg:top-48 lg:mt-5
-          xl:text-gray-700 xl:pr-44 xl:left-[5%] xl:w-64 xl:pl-3 xl:hover:bg-gray-700 xl:hover:text-[#bfd732] xl:pt-5 xl:pb-5 xl:top-48 xl:mt-5"
+              md:text-gray-700 md:pr-44 md:left-[5%] md:w-64 md:pl-3 md:hover:bg-gray-700 md:hover:text-[#bfd732] md:pt-5 md:pb-5 md:top-48 md:mt-5
+              lg:text-gray-700 lg:pr-44 lg:left-[5%] lg:w-64 lg:pl-3 lg:hover:bg-gray-700 lg:hover:text-[#bfd732] lg:pt-5 lg:pb-5 lg:top-48 lg:mt-5
+              xl:text-gray-700 xl:pr-44 xl:left-[5%] xl:w-64 xl:pl-3 xl:hover:bg-gray-700 xl:hover:text-[#bfd732] xl:pt-5 xl:pb-5 xl:top-48 xl:mt-5"
               onClick={handleProfile}
-            >
+              >
               <BiUser size={38} />
               <p
                 className="max-md:hidden absolute 
-          md:top-7 md:left-[29%] md:font-semibold 
-          lg:top-7 lg:left-[29%] lg:font-semibold 
-          xl:top-7 xl:left-[29%] xl:font-semibold"
-              >
+                md:top-7 md:left-[29%] md:font-semibold 
+                lg:top-7 lg:left-[29%] lg:font-semibold 
+                xl:top-7 xl:left-[29%] xl:font-semibold"
+                >
                 Profile
               </p>
             </button>
+                </Link>
           </div>
           <div className="md:flex lg:flex xl:flex">
             <button
