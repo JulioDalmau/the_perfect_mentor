@@ -123,11 +123,11 @@ const Users = () => {
           View all the users
         </p>
         <img
-          className="z-30 absolute transform w-64 h-52 right-0 top-4 
-          sm:w-[25%] sm:h-[22%] sm:right-[5%] sm:top-[8%] 
-          md:w-[25%] md:h-[29%] md:right-[5%] md:top-[5%] 
-          lg:w-[25%] lg:h-[29%] lg:right-[5%] lg:top-[5%] 
-          xl:w-[23%] xl:h-[40%] xl:right-[3%]"
+          className="z-20 absolute transform w-64 h-52 right-0 top-4 
+          sm:z-30 sm:w-[25%] sm:h-[22%] sm:right-[5%] sm:top-[8%] 
+          md:z-30 md:w-[25%] md:h-[29%] md:right-[5%] md:top-[5%] 
+          lg:z-30 lg:w-[25%] lg:h-[29%] lg:right-[5%] lg:top-[5%] 
+          xl:z-30 xl:w-[23%] xl:h-[40%] xl:right-[3%]"
           src={Group85}
           alt="Maskgroup"
         />
@@ -144,7 +144,7 @@ const Users = () => {
             {/* Search */}
             <input
               onChange={handleOnChange}
-              className="z-40 absolute py-4 pl-14 pr-16 bg-white h-12 w-76 rounded-full top-[-4%] shadow shadow-slate-500 left-[11%] 
+              className="z-40 absolute py-4 pl-14 pr-16 bg-white h-14 w-64 rounded-full top-[-4%] shadow shadow-slate-500 left-[8%] 
               sm:left-[3%] sm:top-[5%] sm:w-60
               md:left-[3%] md:top-[5%] 
               lg:left-[3%] lg:top-[5%] lg:w-64
@@ -175,9 +175,11 @@ const Users = () => {
             </div>
 
             {/* container list of users */}
-            <div className="container absolute mx-auto  h-[80%] overflow-y-auto scrollbar-hide 
+            <div className="container absolute mx-auto  h-[95%] overflow-y-auto scrollbar-hide 
             sm:h-[88%] sm:left-2
             md:h-[88%] md:left-2
+            lg:h-[88%] lg:left-0
+            xl:h-[88%] 
             ">
               <div className="" >{usersList}</div>
             </div>

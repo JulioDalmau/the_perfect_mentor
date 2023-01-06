@@ -3,7 +3,7 @@ import React from 'react'
 export const BackgroundCard = () => {
   return (
     <>
-    <div className="absolute bg-white w-11/12 h-3/4 rounded-t-3xl left-4 top-36
+    <div className="absolute bg-white w-10/12 h-3/4 rounded-t-3xl left-5 top-36
     sm:left-[28%] sm:top-[8%] sm:w-[69%] sm:h-[88%] sm:rounded-3xl     
     md:left-[26%] md:top-[6%] md:w-[70%] md:h-[90%] md:rounded-3xl     
     lg:left-[22%] lg:top-[4%] lg:w-[75%] lg:h-[91%] lg:rounded-3xl     
