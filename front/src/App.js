@@ -10,10 +10,10 @@ import Stadistics from "./pages/Stadistics";
 import Profile from "./pages/Profile";
 import Result from "./pages/Result";
 import { useSelector } from "react-redux";
+import UsersDetails from "./pages/UsersDetails";
 
 function App() {
-
-  const user = useSelector((state) => state.user);
+  
 
 
   return (
@@ -24,6 +24,7 @@ function App() {
           <Route path="/skills" element={<Skills />} />
           <Route path="/login" element={<Login />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<UsersDetails />} />
           <Route path="/result/:result" element={<Result />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/stadistics" element={<Stadistics />} />

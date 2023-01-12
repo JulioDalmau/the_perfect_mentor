@@ -1,14 +1,14 @@
 const User = require("../models/User.model");
+const bcrypt = require("bcrypt");
+const Skill = require("../models/Skill.model");
 
 class UserService {
   static async getAllUsers() {
     try {
       const users = await User.find({});
-      // const usersData = users.map( (user) => {return (user.name)})
-      // console.log(usersData);
       return {
         error: false,
-        data: users
+        data: users,
       };
     } catch (error) {
       console.log(error);
@@ -30,9 +30,25 @@ class UserService {
     }
   }
 
+  static async getUser(id) {
+    try {
+      const resp = await User.findOne({ _id: id }).select({
+        password: 0,
+        salt: 0,
+      });
+      return {
+        error: false,
+        data: resp,
+      };
+    } catch (error) {
+      console.error(error);
+      return { error: true, data: error };
+    }
+  }
+
   static async searchUser(search) {
     try {
-      const user = await User.find({ username: search });
+      const user = await User.find({ name: search });
       return {
         error: false,
         data: user,
@@ -43,12 +59,26 @@ class UserService {
     }
   }
 
-  static async editUser(id, { username, password, email }) {
+  static async editUser(id, body) {
     try {
-      const user = await User.findByIdAndUpdate(id, {
-        $set: { username: username, password: password, email: email },
-      });
-      return user;
+      const resp = await User.findByIdAndUpdate(
+        id,
+        {
+          $addToSet: {
+            name: body.name,
+            lastname: body.lastname,
+            age: body.age,
+            role: body.role,
+            country: body.country,
+            language: body.language,
+            profession: body.profession,
+          },
+        }
+      );
+      return {
+        error: false,
+        data: resp,
+      };
     } catch (error) {
       console.log(error);
       return { error: true, data: error };
