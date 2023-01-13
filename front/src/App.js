@@ -11,25 +11,33 @@ import Profile from "./pages/Profile";
 import Result from "./pages/Result";
 import { useSelector } from "react-redux";
 import UsersDetails from "./pages/UsersDetails";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
-  
-
-
+  const user = useSelector((state) => state.user);
   return (
     <>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+
+        <Route element={<ProtectedRoute isAllowed={!!user} />}>
           <Route path="/skills" element={<Skills />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<UsersDetails />} />
           <Route path="/result/:result" element={<Result />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/stadistics" element={<Stadistics />} />
           <Route path="/profile/:id" element={<Profile />} />
-        </Routes>
+        </Route>
+        <Route
+          element={
+            <ProtectedRoute isAllowed={!!user && user.user?.role === "admin"} />
+          }
+        >
+          <Route path="/stadistics" element={<Stadistics />} />
+          <Route path="/reports" element={<Reports />} />
+        </Route>
+      </Routes>
     </>
   );
 }
