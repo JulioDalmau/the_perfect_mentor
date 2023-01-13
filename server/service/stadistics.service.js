@@ -74,8 +74,6 @@ class StadisticsService {
        if( month === 11  ) return nov += 1
        if( month === 12  ) return dec += 1
       })
-      console.log("Esto es months -->", months)
-      console.log("Esto es enero -->", jan)
       
       return {
         error: false,
