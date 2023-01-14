@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Doodle1 from "../assets/home/doodle1.png";
 import Doodle2 from "../assets/home/doodle2.png";
 import Vector from "../assets/home/Vector.png";
@@ -6,86 +6,41 @@ import Saly2 from "../assets/loginsignup/Saly2.png"
 import Maskgroup from '../assets/loginsignup/Maskgroup.png'
 import Doodle42 from '../assets/loginsignup/doodle42.png'
 import { useNavigate } from "react-router-dom";
-// import { UserAuth } from "../context/AuthContext";
 import { useForm } from "react-hook-form";
 import { sendSignUpRequest } from "../state/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 
 const Signup = () => {
 
   
-  
-  // const user = useSelector((state) => state.user);
-  // const user = JSON.parse(localStorage.getItem("user"))
-  // console.log(user)
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     username: "",
     email: "",
     password: "",
     role: "",
+    skill: []
   });
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
 } = useForm();
   
+
   
-  // const generateError = (err) => {};
 
-  const handleOnChange = (e) => {
-    // console.log("ES ESTO values --->", values);
-    setValues({ ...values, [e.target.name]: e.target.value });
-    // console.log("ES ESTO --->", values);
-  };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     /* version anterior */
-  //     // const { data } = await axios.post(
-  //     //   "http://localhost:3001/api/auth/signup",
-  //     //   { ...values },
-  //     //   { withCredentials: true }
-  //     // );
-
-  //     const data = await signUp(values.username, values.email, values.password)
-
-  //     if (data) {
-  //       if (data.errors) {
-  //         const { username, email, password } = data.errors;
-  //         if (username) generateError(username);
-  //         else if (email) generateError(email);
-  //         else if (password) generateError(password);
-  //       } else {
-          
-  //         navigate(`/profile/${data._id}`);
-  //       } 
-  //     } 
-
-      
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
+  
   const onSubmit = (data) => {
-    console.log("ESTO DATA ANTES DEL DISPATCH", data)
     dispatch(sendSignUpRequest(data))
-    // console.log("ESTO DATA DESPUES DEL DISPATCH", data)
     .then(({ payload }) => {
       console.log("esto payload", payload)
       if (payload) {
-        // console.log("esto data dentro de payload", data)
-        // console.log("esto payload y user", payload.user)
           localStorage.setItem("user", JSON.stringify(payload));
           navigate(`/profile/${payload._id}`)
         }
@@ -188,25 +143,26 @@ const Signup = () => {
           name="email"
           placeholder="Email"
           autoComplete="email"
-
           {...register("email", {
             required: "Required field",
           })}
+          
         />
-        <input
-          className="z-30 absolute bg-[#bfd732] w-[75%] h-[11%] py-4 pl-14 pr-16 border rounded-full border-gray-700 left-[12%] top-[63%] text-sm text-gray-700 
-          md:top-[53%] md:left-[58%] md:h-[6%] md:w-[35%]
-          xl:top-[53%] xl:left-[58%] xl:h-[9%] xl:w-[30%]
-          2xl:top-[53%] 2xl:left-[58%] 2xl:h-[10%] 2xl:w-[30%]"
-          type="text"
-          name="role"
-          placeholder="Role"
-          autoComplete="role"
-
-          {...register("role", {
-            required: "Required field",
-          })}
-        />
+        <select 
+        className="z-30 absolute bg-[#bfd732] text-gray-700 border rounded-full border-gray-700 pl-12 
+        top-[63%] left-[12%] h-[11%] w-[75%]
+        md:top-[53%] md:left-[58%] md:h-[8%] md:w-[35%]
+        xl:top-[53%] xl:left-[58%] xl:h-[9%] xl:w-[30%]
+        2xl:top-[53%] 2xl:left-[58%] 2xl:h-[10%] 2xl:w-[30%]"
+        {...register("role", {
+          required: "Required field"
+        })}>
+        
+        <option value="">Select...</option>
+        <option value="mentee">Mentee</option>
+        <option value="mentor">Mentor</option>
+      </select>
+        
         <input
           className="z-30 absolute bg-[#bfd732] w-[75%] h-[11%] py-4 pl-14 pr-16 border rounded-full border-gray-700 left-[12%] top-[77%] text-sm text-gray-700 
           md:top-[65%] md:left-[58%] md:h-[6%] md:w-[35%]
