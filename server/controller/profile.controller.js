@@ -14,6 +14,8 @@ class profileController {
       req.params.id,
       req.body
     );
+
+    console.log("DATA DEL CONTROLLER -->", data)
     if (error) {
       return res.status(404).send(error._message);
     }

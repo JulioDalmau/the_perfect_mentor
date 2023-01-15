@@ -14,6 +14,22 @@ class ReportsService {
     }
   }
 
+  static async getUser(id) {
+    try {
+      const resp = await User.findOne({ _id: id }).select({
+        password: 0,
+        salt: 0,
+      });
+      return {
+        error: false,
+        data: resp,
+      };
+    } catch (error) {
+      console.error(error);
+      return { error: true, data: error };
+    }
+  }
+
   static async searchUser(_id) {
     try {
       const userById = await User.findById(_id);

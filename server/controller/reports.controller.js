@@ -9,6 +9,14 @@ class StadisticsController {
     res.status(200).send(data);
   }
 
+  static async getUser(req, res) {
+    const { error, data } = await UserService.getUser(req.params.id);
+    if (error) {
+      return res.status(404).send(error._message);
+    }
+    res.status(200).send(data);
+  }
+
   static async searchUser(req, res) {
       const { data, error } = await ReportsService.searchUser(req.params.id);
      
