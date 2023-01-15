@@ -150,7 +150,6 @@ const Login = () => {
         src={Doodle42}
         alt="title"
       />
-      {/* <div className="relative inline-flex items-start top-1 "/> */}
       {/* grettings */}
       <p className="flex-1 absolute text-4xl h-[10%] left-[17%] top-[35%] text-gray-700 
       md:left-[57%] md:text-2xl md:top-[35%]
@@ -169,7 +168,7 @@ const Login = () => {
       onSubmit={handleSubmit(onSubmit)}
       >
         <input
-          className="z-30 bg-[#bfd732] w-[75%] h-[11%] py-4 pl-14 pr-16 absolute border rounded-full border-gray-700 left-[12%] top-[50%] text-sm text-gray-700 
+          className="z-30 absolute bg-[#bfd732] w-[75%] h-[11%] py-4 pl-14 pr-10 border rounded-full border-gray-700 left-[12%] top-[50%] text-sm text-gray-700 
           md:top-[45%] md:left-[58%] md:h-[6%] md:w-[35%]
           xl:top-[45%] xl:left-[58%] xl:h-[9%] xl:w-[30%]
           2xl:top-[45%] 2xl:left-[58%] 2xl:h-[10%] 2xl:w-[30%]
@@ -198,12 +197,14 @@ const Login = () => {
           })}
           
           />
+          {/* button sigIn */}
         <button className="z-30 absolute flex items-center justify-center flex-1 px-[20%] py-4 left-[12%] -bottom-[22%] w-[75%] h-[11%] bg-gray-700 rounded-full font-bold text-gray-100 
         md:left-[58%] md:h-[6%] md:w-[35%] md:bottom-[12%] md:px-5
         xl:left-[58%] xl:h-[9%] xl:w-[30%] xl:bottom-[13%] xl:px-5
         2xl:left-[58%] 2xl:h-[10%] 2xl:w-[30%] 2xl:bottom-[10%] 2xl:px-5
         " type="submit">Sign in
         </button>
+        {/* button  forgot password*/}
         <button className="z-30 absolute px-50 py-0 left-[12%] h-[5%] bottom-[10%] text-gray-700
         md:left-[56%] md:h-0 md:w-[36%] md:bottom-[30%] md:text-sm 
         xl:bottom-[32%] xl:left-[54%] xl:h-0
@@ -217,7 +218,7 @@ const Login = () => {
         md:left-[58%]
         lg:left-[58%]
         xl:left-[58%]
-        2xl:left-[%]
+        2xl:left-[58%]
         ">
           Sign in
         </p>

@@ -8,12 +8,12 @@ import Maskgrp from "../assets/profile/Maskgrp.png";
 import Saly30 from "../assets/profile/Saly30.png";
 import doodle51 from "../assets/profile/doodle51.png";
 import doodle41 from "../assets/profile/doodle41.png";
-import { useDispatch, useSelector } from "react-redux";
+import profilePicture from "../assets/profile/ProfileCircle.png"
+import { useDispatch} from "react-redux";
 import { useForm } from "react-hook-form";
 import { updateUser } from "../state/user";
 
 const Profile = () => {
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -28,7 +28,8 @@ const Profile = () => {
     country: "",
     language: "",
     profession: "",
-    skills: "",
+    pic: /* profilePicture */"",
+    skill: "",
   });
 
   const [userData, setUserData] = React.useState([]);
@@ -45,25 +46,7 @@ const Profile = () => {
     getDataUser();
   }, [id]);
 
-  /* con ruta profile/ */
-  // React.useEffect( () => {
-  //   setUserData(user)
-  // },[user])
-
-  // const onSubmit = (data) => {
-  //   console.log("Esto es data desde profile", data)
-  //   dispatch(updateUser(data))
-  //   console.log("Esto es data desde profile", data)
-  //   .then(({ payload }) => {
-  //     if (payload) {
-  //         // localStorage.setItem("user", JSON.stringify(payload));
-  //         // navigate(`/profile/${payload.user._id}`)
-  //         navigate(`/profile/${payload.user._id}`)
-  //       }
-  //     })
-  //     .catch(() => navigate("/404"));
-  // };
-
+  
   const handleChangeData = (e) => {
     // console.log(e.target.name);
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
@@ -71,12 +54,15 @@ const Profile = () => {
 
   const handleUpdate = (e) => {
     dispatch(updateUser(userInfo)).then((res) =>
-      navigate(`/profile/${res.payload._id}`)
+    navigate(`/profile/${res.payload._id}`)
     );
-  };
+    
 
+  };
+  console.log(userData?.age)
   return (
     <>
+      
       <img
         className="absolute z-20 max-md:hidden
     md:right-[12%] md:top-[15%] md:h-[25%] 
@@ -109,6 +95,18 @@ const Profile = () => {
         src={doodle41}
         alt="doodle41"
       />
+      {/* profile picture */}
+      <img
+        className="absolute rounded-full z-20 left-44 top-[10%] h-28 w-28
+          sm:left-[70%] sm:top-[14%] sm:h-28 sm:w-28
+          md:left-[57%] md:top-[13%] md:h-28 md:w-28
+          lg:left-[55%] lg:top-[13%] lg:h-28 lg:w-28
+          xl:left-[53%] xl:top-[12%] xl:h-32 xl:w-32
+          2xl:left-[51.7%] 2xl:top-[11%] 2xl:h-36 2xl:w-36
+          "
+        src={userData?.pic || profilePicture}
+        alt="profile pic default"
+      />
       <div className="absolute right-0 w-full h-full bg-gray-200  
       lg:w-full lg:h-full
       ">
@@ -136,14 +134,14 @@ const Profile = () => {
         </p>
 
         {/* Picture */}
-        <div
+        {/* <div
           className="z-30 absolute top-16 right-8 h-48 w-48 rounded-full bg-gray-200 
         sm:right-[10%] sm:h-40 sm:w-40 sm:top-[10%]
         md:right-[32%] md:h-28 md:w-28 md:top-[13%]
         lg:right-[36%] lg:h-28 lg:w-28 lg:top-[13%]
         xl:right-[39%] xl:h-28 xl:w-28 xl:top-[12%]
         2xl:right-[39%] 2xl:h-32 2xl:w-32 2xl:top-[12%]"
-        />
+        /> */}
 
         {/* Card in md-lg-xl */}
         <div
@@ -171,7 +169,7 @@ const Profile = () => {
           xl:flex xl:left-[45%] xl:-top-[3%] xl:h-7 xl:w-20 xl:rounded-3xl
           2xl:flex 2xl:left-[42%] 2xl:-top-[4%] 2xl:h-8 2xl:w-20 2xl:rounded-3xl"
                   >
-                    <button onClick={handleUpdate} type="button" form="editForm">
+                    <button onClick={handleUpdate} type="submit" form="editForm">
                       {/* Text and pencil */}
                       <div
                         className="absolute flex top-[22%] left-[13%]
@@ -278,7 +276,7 @@ const Profile = () => {
                       className="font-bold"
                       type="number"
                       name="age"
-                      placeholder={userData.age}
+                      placeholder={userData.age || "Add your age"}
                     />
                   </div>
                   <div
@@ -308,7 +306,7 @@ const Profile = () => {
                       className="font-bold"
                       type="text"
                       name="country"
-                      placeholder={userData.country}
+                      placeholder={userData.country || "Add your country"}
                     />
                   </div>
                   <div
@@ -323,7 +321,7 @@ const Profile = () => {
                       className="font-bold"
                       type="text"
                       name="language"
-                      placeholder={userData.language}
+                      placeholder={userData.language || "Add your language"}
                     />
                   </div>
                   <div
@@ -338,7 +336,7 @@ const Profile = () => {
                       className="font-bold"
                       type="text"
                       name="profession"
-                      placeholder={userData.profession || "Add your profession"}
+                      placeholder={/* userData.profession || */ "Add your profession"}
                     />
                   </div>
                   <div
@@ -352,8 +350,23 @@ const Profile = () => {
                       onChange={handleChangeData}
                       className="font-bold"
                       type="text"
-                      name="skills"
-                      placeholder={userData.skills || "Add your skills"}
+                      name="skill"
+                      placeholder={userData.skill || "Add your skills"}
+                    />
+                  </div>
+                  <div
+                    className="border-b-2 
+          md:w-[130%]
+          lg:w-[140%]
+          xl:w-[190%]"
+                  >
+                    <p className="font-bold">Select your picture</p>
+                    <input
+                      onChange={handleChangeData}
+                      className="font-bold"
+                      type="url"
+                      name="pic"
+                      placeholder={userData?.pic || "Add your picture"}
                     />
                   </div>
                 </form>

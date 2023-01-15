@@ -1,97 +1,58 @@
-import React from "react";
-import Group85 from "../assets/users/Group85.png";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
-import { BackgroundCard } from "../components/BackgroundCard";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { BackgroundCard } from "../components/BackgroundCard";
+import {  useSelector } from "react-redux";
+import Group85 from "../assets/users/Group85.png";
 
 const Users = () => {
-  const [users, setUsers] = React.useState([]);
-  const [search, setSearch] = React.useState("")
+  const [usersMentee, setUsersMentee] = useState([]);
+  const [usersMentor, setUsersMentor] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("")
 
- const navigate = useNavigate()
+  const user = useSelector((state) => state.user);
+  const userRole = user.user?.role
+  // const { register, handleSubmit, reset } = useForm();
 
+  const navigate = useNavigate()
+
+  const getUsers = async () => {
+    const dataUser = await axios.get("http://localhost:3001/api/user/");
+    const mentorFilter = dataUser.data.filter( userFilter => {return userFilter.role === "mentor"})
+    const menteeFilter = dataUser.data.filter( userFilter => {return userFilter.role === "mentee"})
+    const adminFilter = dataUser.data.filter( userFilter => {return userFilter.role !== "admin"})
+    setUsers(adminFilter)
+    setUsersMentee(menteeFilter);
+    setUsersMentor(mentorFilter);
+  };
+  
   React.useEffect(() => {
-    const getUsers = async () => {
-      const dataUser = await axios.get("http://localhost:3001/api/user/");
-      setUsers(dataUser.data);
-    };
-
     getUsers();
   }, []);
+  
 
-  const usersList = users.map((eachUser) => {
-    return (
-      <>
-        <div className="relative lg:border xl:border ">
-          <table className="relative flex flex-col border rounded-3xl w-[95%] py-2 mx-2 my-2 space-x-5
-          lg:border-none lg:rounded-none lg:flex-row  lg:-ml-10 lg:pt-[0.5%] lg:pb-[1.5%] 
-          xl:border-none xl:rounded-none xl:flex-row  xl:-ml-8 xl:pt-[0.5%] xl:pb-[1.5%] xl:top-2">
-            <div className="flex flex-row relative left-5 text-sm text-gray-700 
-            lg:w-[20%] lg:pt-[0.1%] 
-            xl:w-[20%] xl:pt-[0.1%] ">
-              <p className="font-bold lg:invisible xl:invisible">
-                Name:<>&nbsp;&nbsp;</>
-              </p>
-              {eachUser.name} {eachUser.lastname}
-            </div>
-            {/* en todo caso agregar container a los div de abajo */}
-            <div className="flex flex-row text-sm text-gray-700
-            lg:w-[3%] lg:font-bold 
-            xl:w-[4%] xl:font-bold ">
-              <p className="font-bold lg:invisible xl:invisible">
-                Age:<>&nbsp;&nbsp;</>
-              </p>
-              {eachUser.age}
-            </div>
-            <div className="flex flex-row text-sm text-gray-700 
-            lg:w-[25%] lg:font-bold
-            xl:w-[26%] xl:font-bold ">
-              <p className="font-bold lg:invisible xl:invisible">
-                Email:<>&nbsp;&nbsp;</>
-              </p>
-              {eachUser.email}
-            </div>
-            <div className="flex flex-row text-sm text-gray-700
-            lg:w-[6%] lg:font-bold
-            xl:w-[6%] xl:font-bold ">
-              <p className="font-bold lg:invisible xl:invisible">
-                Role:<>&nbsp;&nbsp;</>
-              </p>
-              {eachUser.role}
-            </div>
-            <div className="flex flex-row text-sm text-gray-700
-            lg:w-[18%] lg:font-bold
-            xl:w-[18%] xl:font-bold ">
-              <p className="font-bold lg:invisible xl:invisible">
-                Joinded data:<>&nbsp;&nbsp;</>
-              </p>
-              {eachUser.createdAt}
-            </div>
-            <div className=" xl:w-[5%] text-sm font-bold  text-gray-700">
-              {eachUser.verified}
-            </div>
-          </table>
-        </div>
-      </>
-    );
-  });
+  const submit = async (data) => {
+    console.log(data)
+    try {
+          const resp = await axios.get( 
+            `http://localhost:3001/api/user/search/${data}`)
+          const result = await resp.data;
+          navigate(`/users/results`, { state: { result } })
+        } catch (err) {
+          console.error(err);
+        }
+  }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(search)
-    const resp = await axios.get(`http://localhost:3001/api/user/search/${search}`)
-    console.log(search)
-    console.log(resp.data[0].name)
-    setSearch(resp)
-    navigate(`/result/${resp.data[0].name}`)
-    
+    search && submit(search)
   }
 
-  const handleOnChange = (e) => {
+  const handleSearch = (e) => {
     setSearch(e.target.value)
-  }
-
+}
 
   return (
     <>
@@ -105,9 +66,6 @@ const Users = () => {
         lg:w-full lg:h-full lg:rounded-none
         xl:w-full xl:h-full xl:rounded-none" />
         <BackgroundCard />
-        {/* background white */}
-        {/* <div className="z-10 absolute bg-white w-11/12 h-3/4 rounded-t-3xl left-4 top-36 lg:w-[1300px] lg:h-[700px] lg:left-64 lg:top-9 xl:w-[81%] xl:h-[90%] xl:rounded-3xl"> */}
-        {/* <div className="absolute bg-gray-100 rounded-tl-3xl rounded-tr-3xl xl:w-full xl:h-[25%]" /> */}
         <p className="z-20 absolute font-bold text-4xl text-gray-600 left-8 top-10 
         sm:top-[10%] sm:left-[33%] 
         md:top-[8%] md:left-[30%] 
@@ -132,26 +90,24 @@ const Users = () => {
           alt="Maskgroup"
         />
         {/* table list of users */}
-        {/* <div className=" max-xl:hidden z-0 absolute bg-white shadow shadow-slate-500 left-[3%] top-[20%] rounded-3xl w-[94%] h-[75%]"> */}
+       
         <div className="z-20 absolute bg-white shadow  left-[4%] top-[17%] w-[91%] rounded-3xl 
         sm:shadow-slate-500 sm:left-[30%] sm:w-[65%] sm:h-[74%] sm:top-[20%]  
         md:shadow-slate-500 md:left-[27%] md:w-[68%] md:h-[74%] md:top-[20%]  
         lg:shadow-slate-500 lg:left-[24%] lg:w-[71%] lg:h-[74%] lg:top-[18%]  
         xl:shadow-slate-500 xl:left-[18.5%] xl:w-[78%] h-[75%] xl:top-[20%]">
-          {/* <div className="z-30 absolute top-[10%] left-[8%] xl:h-[80%] xl:left-[2%] xl:top-[5%]"> */}
-            {/* Search user */}
-          <form onSubmit={handleSubmit}>
-            {/* Search */}
+     
+        <form  onSubmit={handleSubmit}>
             <input
-              onChange={handleOnChange}
+              onChange={handleSearch}
               className="z-40 absolute py-4 pl-14 pr-16 bg-white h-14 w-64 rounded-full top-[-4%] shadow shadow-slate-500 left-[8%] 
               sm:left-[3%] sm:top-[5%] sm:w-60
               md:left-[3%] md:top-[5%] 
               lg:left-[3%] lg:top-[5%] lg:w-64
               xl:left-[3%] xl:top-[5%] xl:w-72"
+              name=""
               type="text"
-              value={search}
-              placeholder="search for users"
+              placeholder="Search for skill"
             />
           </form>
 
@@ -181,16 +137,220 @@ const Users = () => {
             lg:h-[88%] lg:left-0
             xl:h-[88%] 
             ">
-              <div className="" >{usersList}</div>
+              
+
+
+                 {/* < Userlist/> */}
+                 { userRole === "admin" ?  
+                 users?.map((eachUser, i) => { 
+                       const key = users[i]._id
+                       return ( 
+                          <div key={key} className="relative lg:border xl:border ">
+                          <Link to={`/users/${users[i]?._id}`}
+                          className="relative flex flex-col border rounded-3xl w-[95%] py-2 mx-2 my-2 space-x-5
+                          lg:border-none lg:rounded-none lg:flex-row  lg:-ml-10 lg:pt-[0.5%] lg:pb-[1.5%] 
+                          xl:border-none xl:rounded-none xl:flex-row  xl:-ml-8 xl:pt-[0.5%] xl:pb-[1.5%] xl:top-2"
+                          >
+                          <div
+                            className="flex flex-row relative left-5 text-sm text-gray-700 
+                            lg:w-[20%] lg:pt-[0.1%] 
+                            xl:w-[20%] xl:pt-[0.1%] "
+                            >
+                            <p className="font-bold lg:invisible xl:invisible">
+                              Name:<>&nbsp;&nbsp;</>
+                            </p>
+                            {eachUser.name} {eachUser.lastname}
+                          </div>
+                          <div
+                            className="flex flex-row text-sm text-gray-700
+                            lg:w-[3%] lg:font-bold 
+                            xl:w-[4%] xl:font-bold "
+                          >
+                            <p className="font-bold lg:invisible xl:invisible">
+                              Age:<>&nbsp;&nbsp;</>
+                            </p>
+                            {eachUser.age}
+                          </div>
+                          <div
+                            className="flex flex-row text-sm text-gray-700 
+                            lg:w-[25%] lg:font-bold
+                            xl:w-[26%] xl:font-bold "
+                          >
+                            <p className="font-bold lg:invisible xl:invisible">
+                              Email:<>&nbsp;&nbsp;</>
+                            </p>
+                            {eachUser.email}
+                          </div>
+                          <div
+                            className="flex flex-row text-sm text-gray-700
+                            lg:w-[6%] lg:font-bold
+                            xl:w-[6%] xl:font-bold "
+                          >
+                            <p className="font-bold lg:invisible xl:invisible">
+                              Role:<>&nbsp;&nbsp;</>
+                            </p>
+                            {eachUser.role }
+                          </div>
+                          <div
+                            className="flex flex-row text-sm text-gray-700
+                            lg:w-[18%] lg:font-bold
+                            xl:w-[18%] xl:font-bold "
+                          >
+                            <p className="font-bold lg:invisible xl:invisible">
+                              Joinded data:<>&nbsp;&nbsp;</>
+                            </p>
+                            {eachUser.date}
+                          </div>
+                          <div className=" xl:w-[5%] text-sm font-bold  text-gray-700">
+                            {eachUser.verified}
+                          </div>
+                        </Link >
+                      </div>
+        )
+          })
+       : userRole === "mentee" ? usersMentor?.map((eachUser, i) => { 
+           const key = usersMentor[i]._id
+           return ( 
+              <div key={key} className="relative lg:border xl:border ">
+              <Link to={`/users/${usersMentor[i]?._id}`}
+              className="relative flex flex-col border rounded-3xl w-[95%] py-2 mx-2 my-2 space-x-5
+              lg:border-none lg:rounded-none lg:flex-row  lg:-ml-10 lg:pt-[0.5%] lg:pb-[1.5%] 
+              xl:border-none xl:rounded-none xl:flex-row  xl:-ml-8 xl:pt-[0.5%] xl:pb-[1.5%] xl:top-2"
+              >
+              <div
+                className="flex flex-row relative left-5 text-sm text-gray-700 
+                lg:w-[20%] lg:pt-[0.1%] 
+                xl:w-[20%] xl:pt-[0.1%] "
+                >
+                <p className="font-bold lg:invisible xl:invisible">
+                  Name:<>&nbsp;&nbsp;</>
+                </p>
+                {eachUser.name} {eachUser.lastname}
+              </div>
+              <div
+                className="flex flex-row text-sm text-gray-700
+                lg:w-[3%] lg:font-bold 
+                xl:w-[4%] xl:font-bold "
+              >
+                <p className="font-bold lg:invisible xl:invisible">
+                  Age:<>&nbsp;&nbsp;</>
+                </p>
+                {eachUser.age}
+              </div>
+              <div
+                className="flex flex-row text-sm text-gray-700 
+                lg:w-[25%] lg:font-bold
+                xl:w-[26%] xl:font-bold "
+              >
+                <p className="font-bold lg:invisible xl:invisible">
+                  Email:<>&nbsp;&nbsp;</>
+                </p>
+                {eachUser.email}
+              </div>
+              <div
+                className="flex flex-row text-sm text-gray-700
+                lg:w-[6%] lg:font-bold
+                xl:w-[6%] xl:font-bold "
+              >
+                <p className="font-bold lg:invisible xl:invisible">
+                  Role:<>&nbsp;&nbsp;</>
+                </p>
+                {eachUser.role }
+              </div>
+              <div
+                className="flex flex-row text-sm text-gray-700
+                lg:w-[18%] lg:font-bold
+                xl:w-[18%] xl:font-bold "
+              >
+                <p className="font-bold lg:invisible xl:invisible">
+                  Joinded data:<>&nbsp;&nbsp;</>
+                </p>
+                {eachUser.date}
+              </div>
+              <div className=" xl:w-[5%] text-sm font-bold  text-gray-700">
+                {eachUser.verified}
+              </div>
+            </Link >
+          </div>
+)
+}) :  usersMentee?.map((eachUser, i) => { 
+     const key = usersMentee[i]._id
+     return ( 
+        <div key={key} className="relative lg:border xl:border ">
+        <Link to={`/users/${usersMentee[i]?._id}`}
+        className="relative flex flex-col border rounded-3xl w-[95%] py-2 mx-2 my-2 space-x-5
+        lg:border-none lg:rounded-none lg:flex-row  lg:-ml-10 lg:pt-[0.5%] lg:pb-[1.5%] 
+        xl:border-none xl:rounded-none xl:flex-row  xl:-ml-8 xl:pt-[0.5%] xl:pb-[1.5%] xl:top-2"
+        >
+        <div
+          className="flex flex-row relative left-5 text-sm text-gray-700 
+          lg:w-[20%] lg:pt-[0.1%] 
+          xl:w-[20%] xl:pt-[0.1%] "
+          >
+          <p className="font-bold lg:invisible xl:invisible">
+            Name:<>&nbsp;&nbsp;</>
+          </p>
+          {eachUser.name} {eachUser.lastname}
+        </div>
+        <div
+          className="flex flex-row text-sm text-gray-700
+          lg:w-[3%] lg:font-bold 
+          xl:w-[4%] xl:font-bold "
+        >
+          <p className="font-bold lg:invisible xl:invisible">
+            Age:<>&nbsp;&nbsp;</>
+          </p>
+          {eachUser.age}
+        </div>
+        <div
+          className="flex flex-row text-sm text-gray-700 
+          lg:w-[25%] lg:font-bold
+          xl:w-[26%] xl:font-bold "
+        >
+          <p className="font-bold lg:invisible xl:invisible">
+            Email:<>&nbsp;&nbsp;</>
+          </p>
+          {eachUser.email}
+        </div>
+        <div
+          className="flex flex-row text-sm text-gray-700
+          lg:w-[6%] lg:font-bold
+          xl:w-[6%] xl:font-bold "
+        >
+          <p className="font-bold lg:invisible xl:invisible">
+            Role:<>&nbsp;&nbsp;</>
+          </p>
+          {eachUser.role }
+        </div>
+        <div
+          className="flex flex-row text-sm text-gray-700
+          lg:w-[18%] lg:font-bold
+          xl:w-[18%] xl:font-bold "
+        >
+          <p className="font-bold lg:invisible xl:invisible">
+            Joinded data:<>&nbsp;&nbsp;</>
+          </p>
+          {eachUser.date}
+        </div>
+        <div className=" xl:w-[5%] text-sm font-bold  text-gray-700">
+          {eachUser.verified}
+        </div>
+      </Link >
+    </div>
+)
+}) }
+                  
+
+
+                </div>
             </div>
             <div className="absolute bg-gray-100 
             sm:rounded-b-3xl sm:w-full sm:top-[91%] sm:h-[9%]
             md:rounded-b-3xl md:w-full md:top-[91%] md:h-[9%]
             lg:rounded-b-3xl lg:w-full lg:top-[91%] lg:h-[9%]
             xl:rounded-b-3xl xl:w-full xl:top-[90%] xl:h-[10%]" />
-          </div>
+       
         </div>
-        {/* </div> */}
       </div>
       <Navbar />
     </>
