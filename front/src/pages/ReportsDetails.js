@@ -131,7 +131,7 @@ const UsersDetails = () => {
           md:left-[57%] md:top-[13%] md:h-28 md:w-28
           lg:left-[55%] lg:top-[13%] lg:h-28 lg:w-28
           xl:left-[72%] xl:top-[1%] xl:h-32 xl:w-32
-          2xl:left-[51.7%] 2xl:top-[11%] 2xl:h-36 2xl:w-36
+          2xl:left-[72%] 2xl:top-[1%] 2xl:h-36 2xl:w-36
           "
             src={reportDetail?.pic || profilePicture}
             alt="profile pic default"

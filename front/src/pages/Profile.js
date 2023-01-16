@@ -56,7 +56,7 @@ const Profile = () => {
     );
   };
 
-
+  
   return (
     <>
       
@@ -338,7 +338,8 @@ const Profile = () => {
                       className="font-bold"
                       type="text"
                       name="skill"
-                      placeholder={userData?.skill || "Add your skills"}
+                      // placeholder={`${userData?.skill }  ` || "Add your skills"}
+                      placeholder={userData?.skill + "" || "Add your skills"}
                     />
                   </div>
                   <div
