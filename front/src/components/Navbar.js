@@ -8,6 +8,9 @@ import { HiOutlineDocumentReport } from "react-icons/hi";
 import { BiBarChart } from "react-icons/bi";
 import { BiUser } from "react-icons/bi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import {AiOutlineSolution} from 'react-icons/ai'
+import {HiAcademicCap} from 'react-icons/hi'
+import {MdOutlineConnectWithoutContact} from 'react-icons/md'
 
 export const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -147,7 +150,7 @@ export const Navbar = () => {
                 lg:text-gray-700 lg:pr-44 lg:left-[5%] lg:w-64 lg:pl-3 lg:hover:bg-gray-700 lg:hover:text-[#bfd732] lg:pt-5 lg:pb-5 lg:top-8 lg:mt-5
                 xl:text-gray-700 xl:pr-44 xl:left-[5%] xl:w-64 xl:pl-3 xl:hover:bg-gray-700 xl:hover:text-[#bfd732] xl:pt-5 xl:pb-5 xl:top-8 xl:mt-5"
                   >
-                    <HiOutlineDocumentReport size={38} />
+                    <MdOutlineConnectWithoutContact size={38} />
                     <p
                       className="max-sm:hidden absolute 
                   sm:top-7 sm:left-[29%] sm:font-semibold 
@@ -170,7 +173,7 @@ export const Navbar = () => {
            lg:text-gray-700 lg:pr-44 lg:left-[5%] lg:w-64 lg:pl-3 lg:hover:bg-gray-700 lg:hover:text-[#bfd732] lg:pt-5 lg:pb-5 lg:top-28 lg:mt-5
            xl:text-gray-700 xl:pr-44 xl:left-[5%] xl:w-64 xl:pl-3 xl:hover:bg-gray-700 xl:hover:text-[#bfd732] xl:pt-5 xl:pb-5 xl:top-28 xl:mt-5"
                   >
-                    <BiBarChart size={38} />
+                    <HiAcademicCap size={38} />
                     <p
                       className="max-sm:hidden absolute 
            sm:top-7 sm:left-[29%] sm:font-semibold
@@ -195,7 +198,7 @@ export const Navbar = () => {
                 lg:text-gray-700 lg:pr-44 lg:left-[5%] lg:w-64 lg:pl-3 lg:hover:bg-gray-700 lg:hover:text-[#bfd732] lg:pt-5 lg:pb-5 lg:top-8 lg:mt-5
                 xl:text-gray-700 xl:pr-44 xl:left-[5%] xl:w-64 xl:pl-3 xl:hover:bg-gray-700 xl:hover:text-[#bfd732] xl:pt-5 xl:pb-5 xl:top-8 xl:mt-5"
                   >
-                    <HiOutlineDocumentReport size={38} />
+                    <MdOutlineConnectWithoutContact size={38} />
                     <p
                       className="max-sm:hidden absolute 
                   sm:top-7 sm:left-[29%] sm:font-semibold 
@@ -218,7 +221,7 @@ export const Navbar = () => {
                  lg:text-gray-700 lg:pr-44 lg:left-[5%] lg:w-64 lg:pl-3 lg:hover:bg-gray-700 lg:hover:text-[#bfd732] lg:pt-5 lg:pb-5 lg:top-28 lg:mt-5
                  xl:text-gray-700 xl:pr-44 xl:left-[5%] xl:w-64 xl:pl-3 xl:hover:bg-gray-700 xl:hover:text-[#bfd732] xl:pt-5 xl:pb-5 xl:top-28 xl:mt-5"
                   >
-                    <BiBarChart size={38} />
+                    <AiOutlineSolution size={38} />
                     <p
                       className="max-sm:hidden absolute 
            sm:top-7 sm:left-[29%] sm:font-semibold
@@ -226,7 +229,7 @@ export const Navbar = () => {
            lg:top-7 lg:left-[29%] lg:font-semibold
            xl:top-7 xl:left-[29%] xl:font-semibold"
                     >
-                      My progress
+                      My mentees
                     </p>
                   </button>
                 </Link>
