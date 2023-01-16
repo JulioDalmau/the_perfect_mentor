@@ -10,7 +10,7 @@ class StadisticsController {
   }
 
   static async getUser(req, res) {
-    const { error, data } = await UserService.getUser(req.params.id);
+    const { error, data } = await ReportsService.getUser(req.params.id);
     if (error) {
       return res.status(404).send(error._message);
     }
@@ -25,6 +25,15 @@ class StadisticsController {
     }
     res.status(200).send(data);
   }
+
+  static async deleteUser(req, res) {
+    console.log("Entró a CONTROLLER",req.params.id)
+    const {error, data} = await ReportsService.deleteUser(req.params.id)
+    if (error) {
+        return res.status(404).send(error._message)
+    }
+    res.send( data)
+}
 }
 
 module.exports = StadisticsController;

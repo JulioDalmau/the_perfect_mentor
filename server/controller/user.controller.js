@@ -30,7 +30,6 @@ class UserController {
   }
 
   static async searchUser(req, res) {
-    // console.log('ESTO ES EL RESULTADO DE LA BUSQUEDA --->',req.params.search)
     const { data, error } = await UserService.searchUser(req.params.search);
     if (error) {
       return res.status(404).send(error._message);
