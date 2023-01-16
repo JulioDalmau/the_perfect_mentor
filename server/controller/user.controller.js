@@ -1,5 +1,4 @@
 const UserService = require("../service/user.service");
-const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/auth.utils");
 
 class UserController {

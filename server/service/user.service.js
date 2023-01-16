@@ -1,6 +1,6 @@
 const User = require("../models/User.model");
 const bcrypt = require("bcrypt");
-const Skill = require("../models/Skill.model");
+// const Skill = require("../models/Skill.model");
 
 class UserService {
   static async getAllUsers() {
