@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import axios from "axios";
 import { BackgroundCard } from "../components/BackgroundCard";
+import Maskgroup from "../assets/reports/Maskgroup.png";
 
 const Reports = () => {
   const [users, setUsers] = useState([]);
@@ -20,7 +21,6 @@ const Reports = () => {
   }, []);
 
   const submit = async (data) => {
-    console.log(data);
     try {
       const resp = await axios.get(
         `http://localhost:3001/api/user/search/${data}`
@@ -34,13 +34,14 @@ const Reports = () => {
 
   const deleteUser = async (data) => {
     try {
-      const resp = await axios.delete(`http://localhost:3001/api/reports/${data}`)
-      console.log(resp)
-      return resp
+      const resp = await axios.delete(
+        `http://localhost:3001/api/reports/${data}`
+      );
+      return resp;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,10 +53,9 @@ const Reports = () => {
   };
 
   const handleDeleteUser = (e) => {
-    console.log(e._id)
-    deleteUser(e._id)
-}
-
+    console.log(e._id);
+    deleteUser(e._id);
+  };
 
   return (
     <>
@@ -88,8 +88,11 @@ const Reports = () => {
           Check the reports of the users
         </p>
         <img
-          className="z-30 absolute left-4 top-20 xl:w-[10%] xl:top-[8%] xl:left-[72%]"
-          src=""
+          className="z-30 absolute left-4 top-20 
+          xl:w-[10%] xl:top-[8%] xl:left-[72%]
+          2xl:w-[11%] 2xl:top-[12%] 2xl:left-[78%]
+          "
+          src={Maskgroup}
           alt="doodle2"
         />
         <img
@@ -161,78 +164,78 @@ const Reports = () => {
                     className="relative grid grid-cols-2 space-x-1 lg:border xl:border "
                   >
                     <div className="grid col-start-1 col-end-10 ">
-
-                    
-                    <Link
-                      to={`/reports/${users[i]?._id}`}
-                      className="relative z-20 flex flex-col border rounded-3xl w-[95%] py-2 mx-2 my-2 space-x-11
+                      <Link
+                        to={`/reports/${users[i]?._id}`}
+                        className="relative z-20 flex flex-col border rounded-3xl w-[95%] py-2 mx-2 my-2 space-x-11
                           lg:border-none lg:rounded-none lg:flex-row  lg:-ml-10 lg:pt-[0.5%] lg:pb-[1.5%] 
                           xl:border-none xl:rounded-none xl:flex-row  xl:-ml-8 xl:pt-[0.5%] xl:pb-[1.5%] xl:top-2 xl:left-2"
-                    >
-                      <div
-                        className="flex flex-row relative left-5 text-sm text-gray-700 
+                      >
+                        <div
+                          className="flex flex-row relative left-5 text-sm text-gray-700 
                             lg:w-[20%] lg:pt-[0.1%] 
                             xl:w-[20%] xl:pt-[0.1%] "
-                      >
-                        <p className="font-bold lg:invisible xl:invisible xl:relative xl:left-5">
-                          Name:<>&nbsp;&nbsp;</>
-                        </p >
-                        {eachUser.name} {eachUser.lastname}
-                      </div>
-                      <div
-                        className="relative flex flex-row text-sm text-gray-700
+                        >
+                          <p className="font-bold lg:invisible xl:invisible xl:relative xl:left-5">
+                            Name:<>&nbsp;&nbsp;</>
+                          </p>
+                          {eachUser.name} {eachUser.lastname}
+                        </div>
+                        <div
+                          className="relative flex flex-row text-sm text-gray-700
                             lg:w-[3%] lg:font-bold 
                             xl:w-[4%] xl:font-bold xl:left-3"
-                      >
-                        <p className="font-bold lg:invisible xl:invisible">
-                          Age:<>&nbsp;&nbsp;</>
-                        </p>
-                        {eachUser.age}
-                      </div>
-                      <div
-                        className="relative flex flex-row text-sm text-gray-700 
+                        >
+                          <p className="font-bold lg:invisible xl:invisible">
+                            Age:<>&nbsp;&nbsp;</>
+                          </p>
+                          {eachUser.age}
+                        </div>
+                        <div
+                          className="relative flex flex-row text-sm text-gray-700 
                             lg:w-[25%] lg:font-bold
                             xl:w-[26%] xl:font-bold xl:right-2"
-                      >
-                        <p className="font-bold lg:invisible xl:invisible">
-                          Email:<>&nbsp;&nbsp;</>
-                        </p>
-                        {eachUser.email}
-                      </div>
-                      <div
-                        className="relative flex flex-row text-sm text-gray-700
+                        >
+                          <p className="font-bold lg:invisible xl:invisible">
+                            Email:<>&nbsp;&nbsp;</>
+                          </p>
+                          {eachUser.email}
+                        </div>
+                        <div
+                          className="relative flex flex-row text-sm text-gray-700
                             lg:w-[6%] lg:font-bold
                             xl:w-[6%] xl:font-bold xl:left-6"
-                      >
-                        <p className="font-bold lg:invisible xl:invisible">
-                          Role:<>&nbsp;&nbsp;</>
-                        </p>
-                        {eachUser.role}
-                      </div>
-                      <div
-                        className="relative flex flex-row text-sm text-gray-700
+                        >
+                          <p className="font-bold lg:invisible xl:invisible">
+                            Role:<>&nbsp;&nbsp;</>
+                          </p>
+                          {eachUser.role}
+                        </div>
+                        <div
+                          className="relative flex flex-row text-sm text-gray-700
                             lg:w-[18%] lg:font-bold
                             xl:w-[20%] xl:font-bold xl:right-5"
-                      >
-                        <p className="font-bold lg:invisible xl:invisible">
-                          Joinded data:<>&nbsp;&nbsp;</>
-                        </p>
-                        {eachUser.date.toString().substring(0,10)}
-                      </div>
-                      <div className="relative xl:left-14 xl:w-[5%] text-sm font-bold  text-gray-700 "></div>
-                    </Link>
+                        >
+                          <p className="font-bold lg:invisible xl:invisible">
+                            Joinded data:<>&nbsp;&nbsp;</>
+                          </p>
+                          {eachUser.date.toString().substring(0, 10)}
+                        </div>
+                        <div className="relative xl:left-14 xl:w-[5%] text-sm font-bold  text-gray-700 "></div>
+                      </Link>
                     </div>
                     {/* container actions */}
                     <div className="container relative grid-flow-col space-x-8 grid col-start-10 col-end-12 right-16 py-6 px-2">
-                      <button className="z-30 relative px-3 xl:bg-lime-500 ">
-                        Edit
-                      </button>
-                      <button 
-                      className="z-30 relative px-1 xl:bg-red-500"
-                      onClick={() => handleDeleteUser(eachUser)}
+                      <Link to={`/reports/${users[i]?._id}`}>
+                        <button className="z-30 relative px-3 xl:bg-lime-500 ">
+                          Edit
+                        </button>
+                      </Link>
+                      <button
+                        className="z-30 relative px-1 xl:bg-red-500"
+                        onClick={() => handleDeleteUser(eachUser)}
                       >
                         Delete
-                        </button>
+                      </button>
                     </div>
                   </div>
                 );

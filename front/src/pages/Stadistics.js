@@ -41,8 +41,6 @@ const Stadistics = () => {
     ]
   }
 
-  // bg-gradient-to-b from-yellow-400 to-green-600 
-
   const options = {
     scales: { 
       x: {
@@ -57,8 +55,6 @@ const Stadistics = () => {
       }
   }
   }
-  // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  
 
 
   React.useEffect(() => {
@@ -251,7 +247,7 @@ const Stadistics = () => {
           <div className="absolute top-44 left-5 h-80 w-80 rounded-2xl bg-gray-200 xl:w-[97%] xl:h-[48%] xl:top-[49%]">
         <div className="relative h-full w-full">
 
-            <Bar  style={ {grid: 'hide'} } data={data} options={options}/>
+            <Bar  style={ {width: '800px', margin: "auto"} } data={data} options={options}/>
         </div>
 
 

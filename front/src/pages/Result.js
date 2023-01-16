@@ -131,7 +131,7 @@ const Result = () => {
                         <p className="font-bold lg:invisible xl:invisible">
                           Joinded data:<>&nbsp;&nbsp;</>
                         </p>
-                        {eachUser.date}
+                        {eachUser.date.toString().substring(0, 10)}
                       </div>
                       <div className=" xl:w-[5%] text-sm font-bold  text-gray-700">
                         {eachUser.verified}

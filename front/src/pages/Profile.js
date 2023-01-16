@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiPencil } from "react-icons/bi";
@@ -17,7 +17,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const [userInfo, setUserInfo] = React.useState({
+  const [userInfo, setUserInfo] = useState({
     id: id,
     name: "",
     lastname: "",
@@ -28,15 +28,14 @@ const Profile = () => {
     country: "",
     language: "",
     profession: "",
-    pic: /* profilePicture */"",
+    pic: "",
     skill: "",
   });
 
-  const [userData, setUserData] = React.useState([]);
+  const [userData, setUserData] = useState([]);
   // const {register, handleSubmit, reset, formState: { errors }, } = useForm();
 
-  /* con ruta profile/id */
-  React.useEffect(() => {
+  useEffect(() => {
     const getDataUser = async () => {
       const dataUser = await axios.get(
         `http://localhost:3001/api/profile/${id}`
@@ -48,7 +47,6 @@ const Profile = () => {
 
   
   const handleChangeData = (e) => {
-    // console.log(e.target.name);
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
@@ -56,10 +54,9 @@ const Profile = () => {
     dispatch(updateUser(userInfo)).then((res) =>
     navigate(`/profile/${res.payload._id}`)
     );
-    
-
   };
-  console.log(userData?.age)
+
+
   return (
     <>
       
@@ -132,16 +129,6 @@ const Profile = () => {
         >
           Profile
         </p>
-
-        {/* Picture */}
-        {/* <div
-          className="z-30 absolute top-16 right-8 h-48 w-48 rounded-full bg-gray-200 
-        sm:right-[10%] sm:h-40 sm:w-40 sm:top-[10%]
-        md:right-[32%] md:h-28 md:w-28 md:top-[13%]
-        lg:right-[36%] lg:h-28 lg:w-28 lg:top-[13%]
-        xl:right-[39%] xl:h-28 xl:w-28 xl:top-[12%]
-        2xl:right-[39%] 2xl:h-32 2xl:w-32 2xl:top-[12%]"
-        /> */}
 
         {/* Card in md-lg-xl */}
         <div
@@ -336,7 +323,7 @@ const Profile = () => {
                       className="font-bold"
                       type="text"
                       name="profession"
-                      placeholder={/* userData.profession || */ "Add your profession"}
+                      placeholder={userData.profession || "Add your profession"}
                     />
                   </div>
                   <div
@@ -351,7 +338,7 @@ const Profile = () => {
                       className="font-bold"
                       type="text"
                       name="skill"
-                      placeholder={userData.skill || "Add your skills"}
+                      placeholder={userData?.skill || "Add your skills"}
                     />
                   </div>
                   <div
@@ -373,13 +360,7 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* I don't know */}
-            {/* <div
-            className="border-b-2 
-          md:w-[210%]
-          lg:w-[200%]
-          xl:w-[300%]"
-          /> */}
+           
           </div>
         </div>
 

@@ -3,11 +3,31 @@ import { Navbar } from "../components/Navbar";
 import Group85 from "../assets/users/Group85.png";
 import { BackgroundCard } from "../components/BackgroundCard";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../state/user";
+import profilePicture from "../assets/profile/ProfileCircle.png";
+import { BiPencil } from "react-icons/bi";
 
 const UsersDetails = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [reportDetail, setReportDetail] = useState({});
+  const [userInfo, setUserInfo] = useState({
+    id: id,
+    name: "",
+    lastname: "",
+    email: "",
+    password: "",
+    age: "",
+    role: "",
+    country: "",
+    language: "",
+    profession: "",
+    pic: "",
+    skill: "",
+  });
 
   const detailOfUser = async () => {
     const detail = await axios.get(`http://localhost:3001/api/user/${id}`);
@@ -18,7 +38,15 @@ const UsersDetails = () => {
     detailOfUser();
   }, []);
 
-  const nameAndLastname = reportDetail.name + " " + reportDetail.lastname;
+  const handleChangeData = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  };
+
+  const handleUpdate = (e) => {
+    dispatch(updateUser(userInfo)).then((res) =>
+      navigate(`/reports/${res.payload._id}`)
+    );
+  };
 
   return (
     <>
@@ -63,6 +91,7 @@ const UsersDetails = () => {
           src={Group85}
           alt="Maskgroup"
         />
+
         {/* table list of users */}
         <div
           className="z-20 absolute bg-white shadow left-[4%] top-[17%] w-[91%] rounded-3xl 
@@ -71,90 +100,220 @@ const UsersDetails = () => {
         lg:shadow-slate-500 lg:left-[24%] lg:w-[71%] lg:h-[74%] lg:top-[18%]  
         xl:shadow-slate-500 xl:left-[18.5%] xl:w-[78%] h-[75%] xl:top-[20%]"
         >
+          {/* Buttton pack */}
+          {/* bg text and pencil*/}
+          <div
+            className="z-40 absolute flex left-[38%] -top-[32%] bg-gray-200 h-9 w-9 rounded-full
+          sm:flex sm:left-[73%] sm:-top-[6%] sm:h-7 sm:w-20 sm:rounded-3xl
+          md:flex md:left-[43%] md:-top-[8%] md:h-7 md:w-20 md:rounded-3xl
+          lg:flex lg:left-[42%] lg:-top-[8%] lg:h-7 lg:w-20 lg:rounded-3xl
+          xl:flex xl:left-[5%] xl:top-[5%] xl:h-7 xl:w-20 xl:rounded-3xl
+          2xl:flex 2xl:left-[42%] 2xl:-top-[4%] 2xl:h-8 2xl:w-20 2xl:rounded-3xl"
+          >
+            <button onClick={handleUpdate} type="submit" form="editForm">
+              {/* Text and pencil */}
+              <div
+                className="absolute flex top-[22%] left-[13%]
+              sm:flex sm:flex-row sm:space-x-5 sm:top-[8%] sm:left-[11%]
+              md:flex md:flex-row md:space-x-5 md:top-[8%] md:left-[11%]
+              lg:flex lg:flex-row lg:space-x-5 lg:top-[8%] lg:left-[11%]
+              xl:flex xl:flex-row xl:space-x-5 xl:top-[10%] xl:left-[13%]"
+              >
+                <p className="max-sm:hidden font-semibold">Edit</p>
+                <BiPencil size={21} />
+              </div>
+            </button>
+          </div>
+
+          <img
+            className="absolute rounded-full z-20 left-44 top-[10%] h-28 w-28
+          sm:left-[70%] sm:top-[14%] sm:h-28 sm:w-28
+          md:left-[57%] md:top-[13%] md:h-28 md:w-28
+          lg:left-[55%] lg:top-[13%] lg:h-28 lg:w-28
+          xl:left-[72%] xl:top-[1%] xl:h-32 xl:w-32
+          2xl:left-[51.7%] 2xl:top-[11%] 2xl:h-36 2xl:w-36
+          "
+            src={reportDetail?.pic || profilePicture}
+            alt="profile pic default"
+          />
           {/* container  */}
           <div className=" z-10 absolute bg-white shadow shadow-slate-500 left-[3%] top-[20%] rounded-3xl w-[94%] h-[75%]">
             <div
-              className="relative bg-gray-500 
+              className="relative bg-gray-100 
             md:pl-1 md:border-none md:rounded-t-3xl
             lg:pl-1 lg:py-1 lg:border-none lg:rounded-t-3xl lg:h-7
             xl:pl-1 xl:border-none xl:rounded-t-3xl"
             />
-            {/* container description  */}
-            <div
-              className="absolute container grid-cols-2  w-[full] h-[85%] border border-solid bg-white shadow shadow-slate-500 
-            lg:top-[6%]
-            "
-            >
-              <p className="w-9 h-4 ml-14  py-[3%] font-bold">Name</p>
-              <p className="w-9 h-4 ml-14  py-[3%] font-bold">Email</p>
-              <p className="w-9 h-4 ml-14  py-[3%] font-bold">Language</p>
-              <p className="w-9 h-4 ml-14  py-[3%] font-bold">Skills</p>
-            </div>
 
-            {/* container details of user */}
-            <div
-              className="container absolute mx-auto h-[95%]  
-            sm:h-[88%] sm:left-2
-            md:h-[88%] md:left-2
-            lg:h-[88%] lg:left-2 top-[4%]
-            xl:h-[88%] 
-            "
-            >
-              <div className="relative space-y-2 flex flex-col">
-                <div
-                  className="relative  text-gray-700 
-                      lg:w-[20%] lg:pt-[0.6%] lg:left-[10%] 
-                      xl:w-[20%] xl:pt-[2%] xl:left-[20%]
-                      "
-                >
-                  <p className="font-bold lg:invisible xl:invisible">
-                    Name:<>&nbsp;&nbsp;</>
-                  </p>
-                  {nameAndLastname || "No name added"}
-                </div>
-                <div
-                  className="relative  text-gray-700
-                      lg:w-[20%] lg:pt-[0.6%] lg:left-[20%]
-                      xl:w-[20%] xl:pt-[1%] xl:left-[20%]
-                      "
-                >
-                  <p className="font-bold lg:invisible xl:invisible">
-                    Email:<>&nbsp;&nbsp;</>
-                  </p>
-                  {reportDetail.email}
-                </div>
-                <div
-                  className="relative  text-gray-700 
-                      lg:w-[20%] lg:pt-[0.6%] lg:left-[20%]
-                      xl:w-[20%] xl:pt-[1.5%] xl:left-[20%]
-                      "
-                >
-                  <p className="font-bold lg:invisible xl:invisible">
-                    Language:<>&nbsp;&nbsp;</>
-                  </p>
-                  {reportDetail.language || "No language added"}
-                </div>
-                <div
-                  className="relative  text-gray-700
-                  lg:w-[20%] lg:pt-[0.6%] lg:left-[20%]
-                  xl:w-[20%] xl:pt-[1%] xl:left-[20%]
-                  "
-                >
-                  <p className="font-bold lg:invisible xl:invisible">
-                    Skills:<>&nbsp;&nbsp;</>
-                  </p>
-                  {reportDetail.skill || "No skills added"}
-                </div>
-                <div className="container flex flex-row space-x-10">
-                </div>
-              </div>
-              <div
-                className="relative bg-gray-100 
-            sm:rounded-b-3xl sm:w-full sm:top-[91%] sm:h-[9%]
-            md:rounded-b-3xl md:w-full md:top-[91%] md:h-[9%]
-            lg:rounded-b-3xl lg:w-full lg:top-[99%] lg:h-[10%] 
-            xl:rounded-b-3xl xl:w-full xl:top-[30%] xl:h-[10%] xl:-left-2"
-              />
+            <div class="relative overflow-x-auto">
+              <form action="">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <tbody>
+                    <tr class="bg-white dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        Name
+                      </th>
+                      <td class="px-6 py-4">
+                        <input
+                          onChange={handleChangeData}
+                          className="font-bold"
+                          type="text"
+                          name="name"
+                          placeholder={reportDetail?.name || "No name"}
+                        />
+                      </td>
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        Lastname
+                      </th>
+                      <td class="px-6 py-4">
+                        <input
+                          onChange={handleChangeData}
+                          className="font-bold"
+                          type="text"
+                          name="lastname"
+                          placeholder={reportDetail?.lastname || "No lastname"}
+                        />
+                      </td>
+                    </tr>
+                    <tr class="bg-white dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        Email
+                      </th>
+                      <td class="px-6 py-4">
+                        <input
+                          onChange={handleChangeData}
+                          className="font-bold"
+                          type="email"
+                          name="email"
+                          placeholder={reportDetail?.email}
+                        />
+                      </td>
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        Password
+                      </th>
+                      <td class="px-6 py-4">
+                        <input
+                          onChange={handleChangeData}
+                          className="font-bold"
+                          type="password"
+                          name="password"
+                          placeholder="*************"
+                        />
+                      </td>
+                    </tr>
+                    <tr class="bg-white dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        Age
+                      </th>
+                      <td class="px-6 py-4">
+                        <input
+                          onChange={handleChangeData}
+                          className="font-bold"
+                          type="number"
+                          name="age"
+                          placeholder={reportDetail?.age || "No age"}
+                        />
+                      </td>
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        Role
+                      </th>
+                      <td class="px-6 py-4">
+                        <input
+                          onChange={handleChangeData}
+                          className="font-bold"
+                          type="text"
+                          name="role"
+                          placeholder={reportDetail?.role}
+                        />
+                      </td>
+                    </tr>
+                    <tr class="bg-white dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        Country
+                      </th>
+                      <td class="px-6 py-4">
+                        <input
+                          onChange={handleChangeData}
+                          className="font-bold"
+                          type="text"
+                          name="country"
+                          placeholder={reportDetail?.country || "No country"}
+                        />
+                      </td>
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        Language
+                      </th>
+                      <td class="px-6 py-4">
+                        <input
+                          onChange={handleChangeData}
+                          className="font-bold"
+                          type="text"
+                          name="language"
+                          placeholder={reportDetail?.language || "No language"}
+                        />
+                      </td>
+                    </tr>
+                    <tr class="bg-white dark:bg-gray-800">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        Profession
+                      </th>
+                      <td class="px-6 py-4">
+                        <input
+                          onChange={handleChangeData}
+                          className="font-bold"
+                          type="text"
+                          name="profession"
+                          placeholder={
+                            reportDetail?.profession || "No profession"
+                          }
+                        />
+                      </td>
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        Pic
+                      </th>
+                      <td class="px-6 py-4">
+                        <input
+                          onChange={handleChangeData}
+                          className="font-bold"
+                          type="url"
+                          name="pic"
+                          placeholder={reportDetail?.pic || "No pic"}
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </form>
             </div>
           </div>
         </div>
