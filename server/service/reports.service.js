@@ -42,6 +42,20 @@ class ReportsService {
       return { error: true, data: error };
     }
   }
+
+  static async deleteUser(id) {
+    try {
+      const resp = await User.findByIdAndDelete({_id: id});
+      return {
+        error: false,
+        data: resp,
+      };
+    } catch (error) {
+      console.error(err);
+      return { error: true, data: error }
+    }
+  }
+
 }
 
 module.exports = ReportsService;

@@ -21,7 +21,8 @@ class ProfileService {
     try {
 
       const user = await User.find({_id: id})
-
+      console.log("PROFILE SERVICE USER", user)
+      console.log("PROFILE SERVICE SALT", user.pic)
       const username = userBody.username !== "" ? userBody.username : user.username;
       const name = userBody.name !== "" ? userBody.name : user.name
       const lastname = userBody.lastname !== "" ? userBody.lastname : user.lastname
@@ -30,10 +31,11 @@ class ProfileService {
       const age = userBody.age !== "" ? userBody.age : user.age;
       const role = userBody.role !== "" ? userBody.role : user.role;
       const country = userBody.country !== "" ? userBody.country : user.country;
-      const pic = userBody.pic !== "" ? userBody.pic : user.pic;
+      const pic = userBody.pic !== "" ? userBody.pic : user[0].pic;
       const profession = userBody.profession !== "" ? userBody.profession : user.profession;
       const language = userBody.language !== "" ? userBody.language : user.language;
-      const salt = /* bcrypt.genSaltSync(); */ user.salt
+      const salt =  user[0].salt
+      // const salt = bcrypt.genSaltSync(); user.salt
       const skill = userBody.skill !== "" ? userBody.skill : user.skill;
 
       const resp = await User.findByIdAndUpdate(
