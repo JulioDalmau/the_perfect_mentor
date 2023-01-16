@@ -10,8 +10,8 @@ import Reports from "./pages/Reports";
 import Stadistics from "./pages/Stadistics";
 import Profile from "./pages/Profile";
 import Result from "./pages/Result";
-import Myprogress from "./pages/Myprogress";
-import Mymentees from './pages/Mymentees'
+// import Myprogress from "./pages/Myprogress";
+// import Mymentees from './pages/Mymentees'
 import Matches from "./pages/Matches";
 import ReportsResults from "./pages/ReportsResult"
 import UsersDetails from "./pages/UsersDetails";
